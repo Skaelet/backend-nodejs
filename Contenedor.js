@@ -8,7 +8,6 @@ class Contenedor{
     async save (Object) {
         try {
             let contenido = await fs.promises.readFile(this.rutaArchivo, 'utf-8');
-            console.log(contenido);
             let arreglo;
             let newId = 1;
             try {
@@ -16,7 +15,6 @@ class Contenedor{
             } catch (error) {
                 arreglo = [];
             }
-            console.log(arreglo);
             if(arreglo.length > 0) {
                 let ids = arreglo.map((obj) => obj.id).sort((a, b) => a - b);
                 newId = ids.pop() + 1;
@@ -24,7 +22,6 @@ class Contenedor{
                 await fs.promises.writeFile(this.rutaArchivo, JSON.stringify(arreglo, null, 3));
                 return newId;
             } else {
-                console.log("ELSE");
                 arreglo.push({id: newId, ...Object});
                 await fs.promises.writeFile(this.rutaArchivo, JSON.stringify(arreglo, null, 2));
                 return newId;
@@ -39,7 +36,7 @@ class Contenedor{
             let contenido = await fs.promises.readFile(this.rutaArchivo, 'utf-8');
             let arreglo = JSON.parse(contenido);
             let objeto = arreglo.find(obj => obj.id === id);
-            return (objeto === undefined)? null : objeto;
+            return (objeto === undefined)? {error: "producto no encontrado"} : objeto;
         } catch(error) {
             console.log("El archivo no existe o no posee un array vacío. Error: \n", error);
         }
@@ -59,8 +56,16 @@ class Contenedor{
         try{
             let contenido = await fs.promises.readFile(this.rutaArchivo, 'utf-8');
             let arreglo = JSON.parse(contenido);
-            arreglo = arreglo.filter(obj => obj.id !== id);
-            await fs.promises.writeFile(this.rutaArchivo, JSON.stringify(arreglo, null, 2));
+            let deletedProd = {error: "producto no encontrado"}
+            for (let index = 0; index < arreglo.length; index++) {
+                if(id == arreglo[index].id){
+                    deletedProd = arreglo[index];
+                    arreglo.splice(index, 1);
+                    await fs.promises.writeFile(this.rutaArchivo, JSON.stringify(arreglo, null, 2));
+                    return deletedProd;
+                }
+            }
+            return deletedProd;
         } catch(error) {
             console.log("El archivo no existe o no posee un array vacío. Error: \n", error);
         }
@@ -84,6 +89,23 @@ class Contenedor{
             console.log("El archivo no existe o no posee un array vacío. Error: \n", error);
         }
     }
+
+    async updateProduct(Object){
+        try {
+            let contenido = await fs.promises.readFile(this.rutaArchivo, 'utf-8');
+            let arreglo = JSON.parse(contenido);
+            for (let index = 0; index < arreglo.length; index++) {
+                if(Object.id == arreglo[index].id){
+                    arreglo[index] = Object;
+                    await fs.promises.writeFile(this.rutaArchivo, JSON.stringify(arreglo, null, 2));
+                    return Object;
+                }
+            }
+            return {error: "producto no encontrado"};
+        } catch (error) {
+            console.log("El archivo no existe o no posee un array vacío. Error: \n", error)
+        }
+    }
 }
 
 module.exports = Contenedor;
@@ -104,26 +126,4 @@ const globo = {
     title: 'Globo Terráqueo',                                                                                                                          
     price: 345.67,                                                                                                                                     
     thumbnail: 'https://cdn3.iconfinder.com/data/icons/education-209/64/globe-earth-geograhy-planet-school-256.png',
-}  
-
-
-/* async function main () {
-    const contenedor = new Contenedor ("productos.json");
-    
-    console.log("Método getById(): ",await contenedor.getById(10));
-    
-    await contenedor.save(escuadra);
-    await contenedor.save(calculadora);
-    await contenedor.save(globo);
-
-    console.log("Método getById(): ",await contenedor.getById(2));
-    console.log("Método getById(): ",await contenedor.getById(10));
-
-    await contenedor.deleteById(2);
-
-    console.log("Método getAll(): ", await contenedor.getAll());
-
-    //await contenedor.deleteAll();
 }
-
-main(); */
