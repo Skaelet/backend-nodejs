@@ -12,26 +12,10 @@
     "thumbnail": "https://cdn3.iconfinder.com/data/icons/education-209/64/ruler-triangle-stationary-school-256.png"
   },
   {
-    "id": 4,
+    "id": 3,
     "newProd": {
       "title": "Escuadra",
       "price": 200,
-      "thumbnail": "https://cdn3.iconfinder.com/data/icons/education-209/64/ruler-triangle-stationary-school-256.png"
-    }
-  },
-  {
-    "id": 5,
-    "newProd": {
-      "title": "Escuadra",
-      "price": 400,
-      "thumbnail": "https://cdn3.iconfinder.com/data/icons/education-209/64/ruler-triangle-stationary-school-256.png"
-    }
-  },
-  {
-    "id": 6,
-    "newProd": {
-      "title": "Escuadra",
-      "price": 900,
       "thumbnail": "https://cdn3.iconfinder.com/data/icons/education-209/64/ruler-triangle-stationary-school-256.png"
     }
   }

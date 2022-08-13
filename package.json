@@ -1,17 +1,19 @@
 {
-  "name": "clase3",
-  "version": "1.0.0",
-  "description": "",
+  "name": "test",
+  "version": "0.0.0",
+  "description": "desafio 5 - hbs",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "keywords": [
+    "algoritmos",
+    "vacaciones"
+  ],
+  "author": "Daniel Arias",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.18.1"
-  },
-  "devDependencies": {
-    "nodemon": "^2.0.19"
+    "express": "^4.18.1",
+    "express-handlebars": "^6.0.6"
   }
 }
