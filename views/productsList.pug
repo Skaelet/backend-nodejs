@@ -1,0 +1,14 @@
+html
+    head
+        title='Listado de productos'
+        style
+            include styles.css
+    body
+        h1="Listado de productos"
+        div
+        for item in products
+            div
+                p=item.id
+                p=item.title
+                p=item.price
+                img(src=item.thumbnail)
