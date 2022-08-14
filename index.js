@@ -1,7 +1,9 @@
 const express = require('express');
 const app = express();
 const { engine } = require('express-handlebars');
-const PORT = 8080;
+const PORT = 3000;
+const Contenedor = require('./Contenedor.js');
+const contenedor = new Contenedor('./productos.json');
 
 const server = app.listen(PORT, () => {
   console.log(`Servidor http escuchando en el puerto ${server.address().port}`);
@@ -9,7 +11,8 @@ const server = app.listen(PORT, () => {
 
 server.on('error', (error) => console.log(`Error en servidor ${error}`));
 app.use('/public', express.static(__dirname + '/public'));
-
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.set('view engine', 'hbs');
 app.set('views', './views');
 app.engine(
@@ -22,7 +25,24 @@ app.engine(
   })
 );
 
-app.get('/', (req, res) => {
+app.get('/products', async(req, res) => {
   //sirve productslist.hbs en index.hbs (index.hbs es la plantilla por defecto donde arranca todo)
-  res.render('productslist', { products: productsHC, productsExist: true });
+  const productsList = await contenedor.getAll();
+  const productsExist = productsList.length != 0;
+  res.render('productsList', { products: productsList, productsExist: productsList });
+});
+
+app.get('/', async(req, res) => {
+  res.render('form');
+})
+
+app.post('/products', async(req, res) => {
+  const { title, price, thumbnail } = req.body;
+  const newProd = {
+    title: title,
+    price: parseInt(price),
+    thumbnail: thumbnail,
+  }
+  await contenedor.save(newProd);
+  res.render('form');
 });
