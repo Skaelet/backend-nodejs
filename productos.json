@@ -1,38 +1,20 @@
 [
-  {
-    "id": 1,
-    "title": "Escuadra",
-    "price": 123.45,
-    "thumbnail": "https://cdn3.iconfinder.com/data/icons/education-209/64/ruler-triangle-stationary-school-256.png"
-  },
-  {
-    "id": 2,
-    "title": "Escuadra",
-    "price": 74000,
-    "thumbnail": "https://cdn3.iconfinder.com/data/icons/education-209/64/ruler-triangle-stationary-school-256.png"
-  },
-  {
-    "id": 4,
-    "newProd": {
+   {
+      "id": 1,
       "title": "Escuadra",
-      "price": 200,
+      "price": 123.45,
       "thumbnail": "https://cdn3.iconfinder.com/data/icons/education-209/64/ruler-triangle-stationary-school-256.png"
-    }
-  },
-  {
-    "id": 5,
-    "newProd": {
+   },
+   {
+      "id": 2,
       "title": "Escuadra",
-      "price": 400,
+      "price": 74000,
       "thumbnail": "https://cdn3.iconfinder.com/data/icons/education-209/64/ruler-triangle-stationary-school-256.png"
-    }
-  },
-  {
-    "id": 6,
-    "newProd": {
-      "title": "Escuadra",
-      "price": 900,
-      "thumbnail": "https://cdn3.iconfinder.com/data/icons/education-209/64/ruler-triangle-stationary-school-256.png"
-    }
-  }
+   },
+   {
+      "id": 3,
+      "title": "Manzana",
+      "price": "50",
+      "thumbnail": "https://cdn3.iconfinder.com/data/icons/education-209/64/apple-fruit-science-school-512.png"
+   }
 ]

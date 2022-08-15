@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('../partials/head'); %>
+  </head>
+  <body>
+    <%- include('../partials/navbar'); %>
+    <%=title %>
+      <% if(productsExist) {%>
+        <% products.forEach((item)=>{ %>
+          <p>
+              id: <%=item.id%><br/>
+              titulo: <%=item.title%><br/>
+              price: <%=item.price%><br/>
+              <img class="product-img" src="<%=item.thumbnail %>"/><br/>
+          </p>
+        <% }) %>
+      <% } else { %>
+        <h1>
+          No hay productos
+        </h1>
+      <% } %>
+    <%- include('../partials/footer'); %> 
+  </body>
+</html>
