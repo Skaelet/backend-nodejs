@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const { engine } = require('express-handlebars');
-const PORT = 3000;
+const PORT = 8080;
 const Contenedor = require('./Contenedor.js');
 const contenedor = new Contenedor('./productos.json');
 
@@ -29,11 +29,16 @@ app.get('/products', async(req, res) => {
   //sirve productslist.hbs en index.hbs (index.hbs es la plantilla por defecto donde arranca todo)
   const productsList = await contenedor.getAll();
   const productsExist = productsList.length != 0;
-  res.render('productsList', { products: productsList, productsExist: productsList });
+  res.render('productsList', 
+  { 
+    title: "Listado de productos", 
+    products: productsList, 
+    productsExist: productsExist 
+  });
 });
 
 app.get('/', async(req, res) => {
-  res.render('form');
+  res.render('form', {title:"Carga de productos"});
 })
 
 app.post('/products', async(req, res) => {

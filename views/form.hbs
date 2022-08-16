@@ -1,11 +1,16 @@
 {{>navbar}}
-    <form action="/products" method="post">
+<main>
+  <div class="toLoad">
+    <h1 class="title">{{title}}</h1>
+    <form class="form" action="/products" method="post">
       <label for="title">Nombre:</label>
       <input type="text" name="title" id="title">
       <label for="price">Precio:</label>
       <input type="text" name="price" id="price">
       <label for="thumbnail">Imagen:</label>
       <input type="text" name="thumbnail" id="thumbnail">
-      <input type="submit" value="Cargar producto">
+      <input class="button" type="submit" value="Cargar producto">
     </form>
+  </div>
+</main>
 {{>footer}}
