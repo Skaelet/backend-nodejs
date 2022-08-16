@@ -18,14 +18,19 @@ app.set('view engine', 'ejs');
 app.get('/productos', async(req, res) => {
   const productsList = await contenedor.getAll();
   const productsExist = productsList.length != 0;
-  res.render('pages/products', { title: 'Listado de productos', products:  productsList, productsExist: productsExist});
+  res.render('pages/products', 
+  { 
+    title: 'Listado de productos', 
+    products:  productsList, 
+    productsExist: productsExist
+  });
 });
 
 app.get('/', async(req, res) => {
   res.render('pages/form', {title: 'Carga de productos'});
 });
 
-app.post('/', async(req, res) => {
+app.post('/productos', async(req, res) => {
   const { title, price, thumbnail } = req.body;
   const newProd = {
     title: title,

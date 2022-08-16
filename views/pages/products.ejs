@@ -5,21 +5,26 @@
   </head>
   <body>
     <%- include('../partials/navbar'); %>
-    <%=title %>
-      <% if(productsExist) {%>
-        <% products.forEach((item)=>{ %>
-          <p>
-              id: <%=item.id%><br/>
-              titulo: <%=item.title%><br/>
-              price: <%=item.price%><br/>
-              <img class="product-img" src="<%=item.thumbnail %>"/><br/>
-          </p>
-        <% }) %>
-      <% } else { %>
-        <h1>
-          No hay productos
-        </h1>
-      <% } %>
+    <main>
+      <div class="list">
+        <h1 class="title"><%=title%></h1>
+        <% if(productsExist) {%>
+          <% products.forEach((item)=>{ %>
+            <div class="products">
+                <div class="product-img"><img src="<%=item.thumbnail %>"/></div>
+                <span><%=item.id%></span> 
+                <span><%=item.title%></span>
+                <span><%=item.price%></span>
+            </div>
+          <% }) %>
+        <% } else { %>
+          <div class="products">
+            <p class="title-empty">No hay productos</p>
+          </div>
+        <% } %>
+      </div>
+    </main>
+      
     <%- include('../partials/footer'); %> 
   </body>
 </html>
