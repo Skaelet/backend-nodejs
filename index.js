@@ -25,7 +25,7 @@ app.engine(
   })
 );
 
-app.get('/products', async(req, res) => {
+app.get('/productos', async(req, res) => {
   //sirve productslist.hbs en index.hbs (index.hbs es la plantilla por defecto donde arranca todo)
   const productsList = await contenedor.getAll();
   const productsExist = productsList.length != 0;
@@ -41,7 +41,7 @@ app.get('/', async(req, res) => {
   res.render('form', {title:"Carga de productos"});
 })
 
-app.post('/products', async(req, res) => {
+app.post('/productos', async(req, res) => {
   const { title, price, thumbnail } = req.body;
   const newProd = {
     title: title,
@@ -49,5 +49,5 @@ app.post('/products', async(req, res) => {
     thumbnail: thumbnail,
   }
   await contenedor.save(newProd);
-  res.render('form');
+  res.render('form', {title:"Carga de productos"});
 });
