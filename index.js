@@ -17,7 +17,8 @@ app.set('views', './views');
 
 app.get('/products', async(req, res) => {
   const productsList = await contenedor.getAll();
-  res.render('productsList.pug', { products: productsList });
+  const productsExist = productsList.length != 0;
+  res.render('productsList.pug', { products: productsList, productsExist: productsExist });
 });
 
 app.get('/', async(req, res) => {

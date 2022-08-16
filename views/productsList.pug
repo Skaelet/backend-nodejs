@@ -4,11 +4,14 @@ html
         style
             include styles.css
     body
-        h1="Listado de productos"
+        title="Listado de productos"
         div
-        for item in products
-            div
-                p=item.id
-                p=item.title
-                p=item.price
-                img(src=item.thumbnail)
+        if productsExist
+            for item in products
+                div
+                    p=item.id
+                    p=item.title
+                    p=item.price
+                    img(src=item.thumbnail)
+        else 
+            h1="No hay productos"
