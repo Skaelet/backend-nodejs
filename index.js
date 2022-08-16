@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const PORT = 3000;
+const PORT = 8080;
 const Contenedor = require('./Contenedor.js');
 const contenedor = new Contenedor('./productos.json');
 
@@ -18,11 +18,19 @@ app.set('views', './views');
 app.get('/products', async(req, res) => {
   const productsList = await contenedor.getAll();
   const productsExist = productsList.length != 0;
-  res.render('productsList.pug', { products: productsList, productsExist: productsExist });
+  res.render('productsList.pug', 
+  { 
+    title: "Lista de productos",
+    products: productsList, 
+    productsExist: productsExist,
+   });
 });
 
 app.get('/', async(req, res) => {
-  res.render('form.pug');
+  res.render('form.pug',
+  {
+    title: "Carga de productos"
+  });
 })
 
 app.post('/products', async(req, res) => {

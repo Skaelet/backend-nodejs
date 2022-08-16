@@ -4,14 +4,23 @@ html
         style
             include styles.css
     body
-        title="Listado de productos"
-        div
-        if productsExist
-            for item in products
-                div
-                    p=item.id
-                    p=item.title
-                    p=item.price
-                    img(src=item.thumbnail)
-        else 
-            h1="No hay productos"
+        ul(class="navbar")
+                li
+                    a(href="/")="Inicio"
+                li
+                    a(href="/products")="Productos"
+        main 
+            div(class="list")
+                h1(class="title")=title
+                if productsExist
+                    for item in products
+                        div(class="products")
+                            div(class="product-img")
+                                img(src=item.thumbnail)
+                            span=item.id
+                            span=item.title
+                            span=item.price
+                else 
+                    div="No hay productos"
+        footer(class="footer")
+            p="*Sitio desarrollado por Skaelet. Todos los derechos reservados."

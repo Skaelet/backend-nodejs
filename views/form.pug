@@ -5,18 +5,24 @@ html(lang='en')
         meta(http-equiv='X-UA-Compatible' content='IE=edge')
         meta(name='viewport' content='width=device-width, initial-scale=1.0')
         title="Carga de productos"
+        style 
+            include styles.css
     body
-        navbar 
-            ul 
-                li
-                    a(href="/")="Inicio"
-                li
-                    a(href="/products")="Productos"
-        form(action="/products" method="post")
-            label(for="title")="Nombre:"
-            input(type="text" name="title" id="title")
-            label(for="price")="Precio:"
-            input(type="text" name="price" id="price")
-            label(for="thumbnail")="Imagen:"
-            input(type="text" name="thumbnail" id="thumbnail")
-            input(type="submit" value="Cargar producto")
+        ul(class="navbar")
+            li
+                a(href="/")="Inicio"
+            li
+                a(href="/products")="Productos"
+        main
+            div(class="toLoad")
+                h1(class="title")=title
+                form(class="form" action="/products" method="post")
+                    label(for="title")="Nombre:"
+                    input(type="text" name="title" id="title")
+                    label(for="price")="Precio:"
+                    input(type="text" name="price" id="price")
+                    label(for="thumbnail")="Imagen:"
+                    input(type="text" name="thumbnail" id="thumbnail")
+                    input(class="button" type="submit" value="Cargar producto")
+        footer(class="footer")
+            p="*Sitio desarrollado por Skaelet. Todos los derechos reservados."
