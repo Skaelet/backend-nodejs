@@ -8,7 +8,7 @@ html
                 li
                     a(href="/")="Inicio"
                 li
-                    a(href="/products")="Productos"
+                    a(href="/productos")="Productos"
         main 
             div(class="list")
                 h1(class="title")=title
@@ -21,6 +21,7 @@ html
                             span=item.title
                             span=item.price
                 else 
-                    div="No hay productos"
+                    div(class="products")
+                        p(class="title-empty")="No hay productos"
         footer(class="footer")
             p="*Sitio desarrollado por Skaelet. Todos los derechos reservados."

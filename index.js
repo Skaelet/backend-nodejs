@@ -15,7 +15,7 @@ app.use(express.urlencoded({ extended: true }));
 app.set('view engine', 'pug');
 app.set('views', './views');
 
-app.get('/products', async(req, res) => {
+app.get('/productos', async(req, res) => {
   const productsList = await contenedor.getAll();
   const productsExist = productsList.length != 0;
   res.render('productsList.pug', 
@@ -33,7 +33,7 @@ app.get('/', async(req, res) => {
   });
 })
 
-app.post('/products', async(req, res) => {
+app.post('/productos', async(req, res) => {
   const { title, price, thumbnail } = req.body;
   const newProd = {
     title: title,
@@ -41,5 +41,5 @@ app.post('/products', async(req, res) => {
     thumbnail: thumbnail,
   }
   await contenedor.save(newProd);
-  res.render('form.pug');
+  res.render('form.pug', {title: "Carga de productos"});
 });
