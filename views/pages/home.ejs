@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('../partials/head'); %>
+  </head>
+  <body>
+    <%- include('../partials/navbar'); %>
+    <main>
+      <div class="toLoad">
+        <h1 class="title"> <%title%> </h1>
+        <form class="form" onsubmit="sendProduct()">
+          <label for="title">Nombre:</label>
+          <input type="text" name="title" id="title">
+          <label for="price">Precio:</label>
+          <input type="text" name="price" id="price">
+          <label for="thumbnail">Imagen:</label>
+          <input type="text" name="thumbnail" id="thumbnail">
+          <input class="button" type="submit" value="Cargar producto">
+        </form>
+      </div>
+      <div class="list" id="products">
+        <h1 class="title"><%=title%></h1>
+        <% if(productsExist) {%>
+          <% products.forEach((item)=>{ %>
+            <div class="products">
+                <div class="product-img"><img src="<%=item.thumbnail %>"/></div>
+                <span><%=item.id%></span> 
+                <span><%=item.title%></span>
+                <span><%=item.price%></span>
+            </div>
+          <% }) %>
+        <% } else { %>
+          <div class="products">
+            <p class="title-empty">No hay productos</p>
+          </div>
+        <% } %>
+      </div>
+    </main>
+    <%- include('../partials/footer'); %> 
+  </body>
+</html>
