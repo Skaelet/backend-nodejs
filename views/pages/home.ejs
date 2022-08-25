@@ -8,7 +8,7 @@
     <main>
       <div class="toLoad">
         <h1 class="title"> <%title%> </h1>
-        <form class="form" onsubmit="sendProduct()">
+        <form class="form" onsubmit="return sendProduct(this)">
           <label for="title">Nombre:</label>
           <input type="text" name="title" id="title">
           <label for="price">Precio:</label>
@@ -34,6 +34,30 @@
             <p class="title-empty">No hay productos</p>
           </div>
         <% } %>
+      </div>
+      <div class="messajes">
+        <h1 class="messajes--title">Centro de mensajes</h1>
+        <form class="form" onsubmit="return sendMessaje(this)">
+          <label for="email">Email:</label>
+          <input type="email" name="email" id="email">
+          <label for="messaje">Mensaje:</label>
+          <input type="text" name="messaje" id="messaje">
+          <input class="button" type="submit" value="Enviar">
+        </form>
+        <div class="messajes__list" id="messajes__list">
+          <% if(messajesExist) {%>
+            <% messajesList.forEach((item)=>{ %>
+              <div class="messajes__list--messaje">
+                <span><%=item.email%></span>
+                <span><%=item.date%></span>
+                <span><%=item.messaje%></span>
+              </div>
+            <% }) %>
+          <% } else { %>
+            <div class="messajes__list--messaje">
+            </div>
+          <% } %>
+        </div>
       </div>
     </main>
     <%- include('../partials/footer'); %> 
