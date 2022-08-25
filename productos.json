@@ -10,5 +10,17 @@
       "title": "Manzana",
       "price": "1000",
       "thumbnail": "https://cdn3.iconfinder.com/data/icons/education-209/64/apple-fruit-science-school-512.png"
+   },
+   {
+      "id": 3,
+      "title": "Manzana",
+      "price": "500",
+      "thumbnail": "https://cdn3.iconfinder.com/data/icons/education-209/64/apple-fruit-science-school-512.png"
+   },
+   {
+      "id": 4,
+      "title": "Manzana",
+      "price": "5005",
+      "thumbnail": "https://cdn3.iconfinder.com/data/icons/education-209/64/apple-fruit-science-school-512.png"
    }
 ]

@@ -21,7 +21,7 @@ main{
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-around;
   height: 100vh;
 }
 
@@ -82,8 +82,8 @@ main{
 /* Page products */
 
 .list{
-  margin: 50px 0;
-  width: 60vw;
+  margin: 20px 0 0;
+  width: 30vw;
   display: flex;
   flex-flow: column nowrap;
   background-color: #34353a;
@@ -121,8 +121,8 @@ main{
 /* Page form */
 
 .toLoad{
-  margin: 50px 0;
-  width: 40vw;
+  margin: 20px 0 0;
+  width: 30vw;
   display: flex;
   flex-flow: column nowrap;
   background-color: #34353a;
@@ -160,4 +160,43 @@ main{
   cursor: pointer;
   border-radius: 2px;
   text-transform: uppercase;
+}
+
+.messajes{
+  margin: 20px 0;
+  width: 30vw;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  background-color: #34353a;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.messajes__list{
+  background-color: #4a4b52;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  width: 100%;
+  padding: 5px 0 15px;
+}
+
+.messajes__list h3{
+  text-transform: uppercase;
+  color: #f5f5f5;
+  margin-bottom: 10px;
+}
+
+.messajes__list--messaje{
+  background-color: #f5f5f5;
+  overflow: hidden;
+  width: 90%;
+  padding: 5px;
+}
+
+.messajes__list--messaje h5{
+  text-transform: uppercase;
+  color: #34353a;
+  text-align: center;
 }
