@@ -35,7 +35,7 @@ class Contenedor{
         try{
             let contenido = await fs.promises.readFile(this.rutaArchivo, 'utf-8');
             let arreglo = JSON.parse(contenido);
-            let objeto = arreglo.find(obj => obj.id === id);
+            let objeto = arreglo.find(obj => obj.id == id);
             return (objeto === undefined)? {error: "producto no encontrado"} : objeto;
         } catch(error) {
             console.log("El archivo no existe o no posee un array vacío. Error: \n", error);
@@ -56,7 +56,7 @@ class Contenedor{
         try{
             let contenido = await fs.promises.readFile(this.rutaArchivo, 'utf-8');
             let arreglo = JSON.parse(contenido);
-            let deletedProd = {error: "producto no encontrado"}
+            let deletedProd = {error: "id no encontrado"}
             for (let index = 0; index < arreglo.length; index++) {
                 if(id == arreglo[index].id){
                     deletedProd = arreglo[index];
@@ -109,21 +109,3 @@ class Contenedor{
 }
 
 module.exports = Contenedor;
-
-const escuadra = {                                                                                                                                                    
-    title: 'Escuadra',                                                                                                                                 
-    price: 123.45,                                                                                                                                     
-    thumbnail: 'https://cdn3.iconfinder.com/data/icons/education-209/64/ruler-triangle-stationary-school-256.png',
-}
-
-const calculadora = {                                                                                                                                                    
-    title: 'Calculadora',                                                                                                                              
-    price: 234.56,                                                                                                                                     
-    thumbnail: 'https://cdn3.iconfinder.com/data/icons/education-209/64/calculator-math-tool-school-256.png',
-}
-
-const globo = {                                                                                                                                                    
-    title: 'Globo Terráqueo',                                                                                                                          
-    price: 345.67,                                                                                                                                     
-    thumbnail: 'https://cdn3.iconfinder.com/data/icons/education-209/64/globe-earth-geograhy-planet-school-256.png',
-}
