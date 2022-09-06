@@ -11,7 +11,7 @@ const mysql = ({
 });
 const sqlite3 = ({
   client: 'sqlite3',
-  connection: { filename: './mydb.sqlite' }
+  connection: { filename: './db/ecommerce.sqlite' }
 });
 const Contenedor = require('./Contenedor');
 const listProducts = new Contenedor(mysql, 'products');
