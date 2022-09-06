@@ -1,109 +1,96 @@
-const fs = require("fs");
-
 class Contenedor{
-    constructor(rutaArchivo=''){
-        this.rutaArchivo = rutaArchivo;
+    constructor(config, name){
+        this.knex = require('knex')(config);
+        this.nameTable = name;
     }
 
-    async save (Object) {
+    async createTable(fields) {
         try {
-            let contenido = await fs.promises.readFile(this.rutaArchivo, 'utf-8');
-            let arreglo;
-            let newId = 1;
-            try {
-                arreglo = await JSON.parse(contenido);
-            } catch (error) {
-                arreglo = [];
-            }
-            if(arreglo.length > 0) {
-                let ids = arreglo.map((obj) => obj.id).sort((a, b) => a - b);
-                newId = ids.pop() + 1;
-                arreglo.push({id: newId, ...Object});
-                await fs.promises.writeFile(this.rutaArchivo, JSON.stringify(arreglo, null, 3));
-                return newId;
+            if (!await this.knex.schema.hasTable(this.nameTable)) {
+                await this.knex.schema.createTable(this.nameTable, fields)
+                console.log(`Tabla ${this.nameTable} creada`);
             } else {
-                arreglo.push({id: newId, ...Object});
-                await fs.promises.writeFile(this.rutaArchivo, JSON.stringify(arreglo, null, 2));
-                return newId;
+                console.log(`Tabla ${this.nameTable} ya existente`);
             }
         } catch (error) {
-            console.error(error);
+            console.log(error);
+        }
+    }
+
+    async save(Object) {
+        try {
+            return await this.knex(this.nameTable)
+                .insert(Object, 'id');
+        } catch (error) {
+            console.log(error);
         }
     }
 
     async getById(id) {
-        try{
-            let contenido = await fs.promises.readFile(this.rutaArchivo, 'utf-8');
-            let arreglo = JSON.parse(contenido);
-            let objeto = arreglo.find(obj => obj.id === id);
-            return (objeto === undefined)? {error: "producto no encontrado"} : objeto;
-        } catch(error) {
-            console.log("El archivo no existe o no posee un array vacío. Error: \n", error);
+        try {
+            return (
+                    await this.knex(this.nameTable)
+                        .select('*')
+                        .where('id', id)
+                    )
+        } catch (error) {
+            console.log(error);
+        } finally {
+            await this.knex.destroy();
         }
     }
 
     async getAll() {
-        try{
-            let contenido = await fs.promises.readFile(this.rutaArchivo, 'utf-8');
-            let arreglo = JSON.parse(contenido);
-            return arreglo;
-        } catch(error) {
-            console.log("El archivo no existe o no posee un array vacío. Error: \n", error);
+        let contenedor = [];
+        try {
+            contenedor = await this.knex(this.nameTable).select("*");
+        } catch (error) {
+            console.log(error, 'getAll');
         }
+        return contenedor;
     }
 
     async deleteById(id) {
-        try{
-            let contenido = await fs.promises.readFile(this.rutaArchivo, 'utf-8');
-            let arreglo = JSON.parse(contenido);
-            let deletedProd = {error: "producto no encontrado"}
-            for (let index = 0; index < arreglo.length; index++) {
-                if(id == arreglo[index].id){
-                    deletedProd = arreglo[index];
-                    arreglo.splice(index, 1);
-                    await fs.promises.writeFile(this.rutaArchivo, JSON.stringify(arreglo, null, 2));
-                    return deletedProd;
-                }
-            }
-            return deletedProd;
-        } catch(error) {
-            console.log("El archivo no existe o no posee un array vacío. Error: \n", error);
+        try {
+            return (
+                    await this.knex(this.nameTable)
+                        .select('*')
+                        .where('id', id)
+                        .del('*')
+                    )
+        } catch (error) {
+            console.log(error);
+        } finally {
+            await this.knex.destroy();
         }
     }
 
     async deleteAll() {
-        try{
-            await fs.promises.writeFile(this.rutaArchivo, JSON.stringify([], null, 2));
-        } catch(error) {
-            console.log("El archivo no existe o no posee un array vacío. Error: \n", error);
-        }
-    }
-
-    async getProductRandom() {
-        try{
-            let contenido = await fs.promises.readFile(this.rutaArchivo, 'utf-8');
-            let arreglo = JSON.parse(contenido);
-            const indexRandom = Math.floor(Math.random()*arreglo.length);
-            return arreglo[indexRandom];
-        } catch(error) {
-            console.log("El archivo no existe o no posee un array vacío. Error: \n", error);
-        }
-    }
-
-    async updateProduct(Object){
         try {
-            let contenido = await fs.promises.readFile(this.rutaArchivo, 'utf-8');
-            let arreglo = JSON.parse(contenido);
-            for (let index = 0; index < arreglo.length; index++) {
-                if(Object.id == arreglo[index].id){
-                    arreglo[index] = Object;
-                    await fs.promises.writeFile(this.rutaArchivo, JSON.stringify(arreglo, null, 2));
-                    return Object;
-                }
-            }
-            return {error: "producto no encontrado"};
+            return (
+                    await this.knex(this.nameTable)
+                        .select('*')
+                        .del('*')
+                    )
         } catch (error) {
-            console.log("El archivo no existe o no posee un array vacío. Error: \n", error)
+            console.log(error);
+        } finally {
+            await this.knex.destroy();
+        }
+    }
+
+    async updateProduct(Object) {
+        try {
+            return (
+                    await this.knex(this.nameTable)
+                        .select('*')
+                        .where('id', id)
+                        .update(Object)
+                    )
+        } catch (error) {
+            console.log(error);
+        } finally {
+            await this.knex.destroy();
         }
     }
 }

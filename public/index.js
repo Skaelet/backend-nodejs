@@ -6,6 +6,8 @@ socket.on("connect", () => {
 
 socket.on('product', ({ id, title, price, thumbnail }) => {
     const products = document.getElementById('products');
+    const productsEmpty = document.getElementById('products--empty');
+    productsEmpty && products.removeChild(productsEmpty);
     const newProduct = document.createElement('div');
     newProduct.className = 'products';
     newProduct.innerHTML = 
@@ -46,6 +48,8 @@ const sendMessaje = () => {
 
 socket.on('messaje', ({ date, email, messaje }) => {
     const messajes = document.getElementById('messajes__list');
+    const messajeEmpty = document.getElementById('messaje--empty');
+    messajeEmpty && messajes.removeChild(messajeEmpty)
     const messajesListMessaje = document.createElement('div');
     messajesListMessaje.className = 'messajes__list--messaje';
     messajesListMessaje.innerHTML = 
