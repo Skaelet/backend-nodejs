@@ -1,0 +1,303 @@
+danie@DESKTOP-72KTKOC MINGW64 ~ (master)
+$ mongo
+MongoDB shell version v4.4.16
+connecting to: mongodb://127.0.0.1:27017/?compressors=disabled&gssapiServiceName=mongodb
+Implicit session: session { "id" : UUID("874af753-f389-4979-af51-d6738f271944") }
+MongoDB server version: 6.0.1
+WARNING: shell and server versions do not match
+---
+The server generated these startup warnings when booting:
+        2022-09-20T17:23:10.878-03:00: Access control is not enabled for the database. Read and write access to data and configuration is unrestricted
+        2022-09-20T17:23:10.879-03:00: This server is bound to localhost. Remote systems will be unable to connect to this server. Start the server with --bind_ip <address> to specify which IP addresses it should serve responses from, or with --bind_ip_all to bind to all interfaces. If this behavior is desired, start the server with --bind_ip 127.0.0.1 to disable this warning
+---
+---
+        Enable MongoDB's free cloud-based monitoring service, which will then receive and display
+        metrics about your deployment (disk utilization, CPU, operation statistics, etc).
+
+        The monitoring data will be available on a MongoDB website with a unique URL accessible to you
+        and anyone you share the URL with. MongoDB may use this information to make product
+        improvements and to suggest MongoDB products and deployment options to you.
+
+        To enable free monitoring, run the following command: db.enableFreeMonitoring()
+        To permanently disable this reminder, run the following command: db.disableFreeMonitoring()
+---
+> use ecommerce
+switched to db ecommerce
+> db.createCollection("mensajes")
+{ "ok" : 1 }
+> db.createCollection("productos")
+{ "ok" : 1 }
+> db.mensajes.insertMany([{"email": "daniel@gmail.com", "timestamp": "20/09/2022 17:00", "mensaje": "Buenas!"}, {"email": "daniel@gmail.com", "timestamp": "20/09/2022 17:00", "mensaje": "Como estás?"}, {"email": "vicky@gmail.com", "timestamp": "20/09/2022 17:03", "mensaje": "Hola Dani"}, {"email": "vicky@gmail.com", "timestamp": "20/09/2022 17:04", "mensaje": "Bien bien y vos?"}, {"email": "daniel@gmail.com", "timestamp": "20/09/2022 17:05", "mensaje": "Bien por suerte!"}, {"email": "daniel@gmail.com", "timestamp": "20/09/2022 17:05", "mensaje": "Te escribo para consultarte por una calculadora"}, {"email": "daniel@gmail.com", "timestamp": "20/09/2022 17:06", "mensaje": "Quisiera saber que modelos tenes y cuanto cuesta cada uno"}, {"email": "vicky@gmail.com", "timestamp": "20/09/2022 17:10", "mensaje": "Me queda un solo modelo, de la marca Casio, cuesta $1200"}, {"email": "daniel@gmail.com", "timestamp": "20/09/2022 17:12", "mensaje": "Ah perfecto"}, {"email": "daniel@gmail.com", "timestamp": "20/09/2022 17:12", "mensaje": "Paso 
+por él el miércoles!"}])
+{
+        "acknowledged" : true,
+        "insertedIds" : [
+                ObjectId("632a29cdaee9c5b729f94e62"),
+                ObjectId("632a29cdaee9c5b729f94e63"),
+                ObjectId("632a29cdaee9c5b729f94e64"),
+                ObjectId("632a29cdaee9c5b729f94e65"),
+                ObjectId("632a29cdaee9c5b729f94e66"),
+                ObjectId("632a29cdaee9c5b729f94e67"),
+                ObjectId("632a29cdaee9c5b729f94e68"),
+                ObjectId("632a29cdaee9c5b729f94e69"),
+                ObjectId("632a29cdaee9c5b729f94e6a"),
+                ObjectId("632a29cdaee9c5b729f94e6b")
+        ]
+}
+> db.productos.insertMany(["name": "escuadra",])
+uncaught exception: SyntaxError: missing ] after element list :
+@(shell):1:31
+>     "price": 500,
+...
+... ^C
+
+> show collections
+mensajes
+productos
+> db.productos.find()
+> db.productos.insertMany([{"name": "escuadra", "price": 500, "thumbnail": "https://cdn3.iconfinder.com/data/icons/education-209/64/ruler-triangle-stationary-school-128.png"}, {"name": "matraz", "price": 1000, "thumbnail": "https://cdn3.iconfinder.com/data/icons/education-209/64/tube-lab-science-school-128.png"}, {"name": "calculadora", "price": 1200, "thumbnail": "https://cdn3.iconfinder.com/data/icons/education-209/64/calculator-math-tool-school-128.png"}, {"name": "cuaderno", "price": 2300, "thumbnail": "https://cdn3.iconfinder.com/data/icons/education-209/64/book-note-paper-school-128.png"}, {"name": "pizarrón", "price": 2800, "thumbnail": "https://cdn3.iconfinder.com/data/icons/education-209/64/board-math-class-school-128.png"}, {"name": "globo terráqueo", "price": 3100, "thumbnail": "https://cdn3.iconfinder.com/data/icons/education-209/64/globe-earth-geograhy-planet-school-128.png"}, {"name": "reloj", "price": 3500, "thumbnail": "https://cdn3.iconfinder.com/data/icons/education-209/64/clock-stopwatch-timer-time-128.png"}, 
+{"name": "mochila", "price": 4000, "thumbnail": "https://cdn3.iconfinder.com/data/icons/education-209/64/bag-pack-container-school-128.png"}, {"name": "microscopio", "price": 4500, "thumbnail": "https://cdn3.iconfinder.com/data/icons/education-209/64/microscope-lab-science-school-128.png"}, {"name": "camión", "price": 4800, "thumbnail": "https://cdn3.iconfinder.com/data/icons/education-209/64/bus-vehicle-transport-school-128.png"}])
+{
+        "acknowledged" : true,
+        "insertedIds" : [
+                ObjectId("632a2bb0aee9c5b729f94e6c"),
+                ObjectId("632a2bb0aee9c5b729f94e6d"),
+                ObjectId("632a2bb0aee9c5b729f94e6e"),
+                ObjectId("632a2bb0aee9c5b729f94e6f"),
+                ObjectId("632a2bb0aee9c5b729f94e70"),
+                ObjectId("632a2bb0aee9c5b729f94e71"),
+                ObjectId("632a2bb0aee9c5b729f94e72"),
+                ObjectId("632a2bb0aee9c5b729f94e73"),
+                ObjectId("632a2bb0aee9c5b729f94e74"),
+                ObjectId("632a2bb0aee9c5b729f94e75")
+        ]
+}
+> db.productos.find().pretty()
+{
+        "_id" : ObjectId("632a2bb0aee9c5b729f94e6c"),
+        "name" : "escuadra",
+        "price" : 500,
+        "thumbnail" : "https://cdn3.iconfinder.com/data/icons/education-209/64/ruler-triangle-stationary-school-128.png"
+}
+{
+        "_id" : ObjectId("632a2bb0aee9c5b729f94e6d"),
+        "name" : "matraz",
+        "price" : 1000,
+        "thumbnail" : "https://cdn3.iconfinder.com/data/icons/education-209/64/tube-lab-science-school-128.png"
+}
+{
+        "_id" : ObjectId("632a2bb0aee9c5b729f94e6e"),
+        "name" : "calculadora",
+        "price" : 1200,
+        "thumbnail" : "https://cdn3.iconfinder.com/data/icons/education-209/64/calculator-math-tool-school-128.png"
+}
+{
+        "_id" : ObjectId("632a2bb0aee9c5b729f94e6f"),
+        "name" : "cuaderno",
+        "price" : 2300,
+        "thumbnail" : "https://cdn3.iconfinder.com/data/icons/education-209/64/book-note-paper-school-128.png"
+}
+{
+        "_id" : ObjectId("632a2bb0aee9c5b729f94e70"),
+        "name" : "pizarrón",
+        "price" : 2800,
+        "thumbnail" : "https://cdn3.iconfinder.com/data/icons/education-209/64/board-math-class-school-128.png"
+}
+{
+        "_id" : ObjectId("632a2bb0aee9c5b729f94e71"),
+        "name" : "globo terráqueo",
+        "price" : 3100,
+        "thumbnail" : "https://cdn3.iconfinder.com/data/icons/education-209/64/globe-earth-geograhy-planet-school-128.png"
+}
+{
+        "_id" : ObjectId("632a2bb0aee9c5b729f94e72"),
+        "name" : "reloj",
+        "price" : 3500,
+        "thumbnail" : "https://cdn3.iconfinder.com/data/icons/education-209/64/clock-stopwatch-timer-time-128.png"
+}
+{
+        "_id" : ObjectId("632a2bb0aee9c5b729f94e73"),
+        "name" : "mochila",
+        "price" : 4000,
+        "thumbnail" : "https://cdn3.iconfinder.com/data/icons/education-209/64/bag-pack-container-school-128.png"
+}
+{
+        "_id" : ObjectId("632a2bb0aee9c5b729f94e74"),
+        "name" : "microscopio",
+        "price" : 4500,
+        "thumbnail" : "https://cdn3.iconfinder.com/data/icons/education-209/64/microscope-lab-science-school-128.png"
+}
+{
+        "_id" : ObjectId("632a2bb0aee9c5b729f94e75"),
+        "name" : "camión",
+        "price" : 4800,
+        "thumbnail" : "https://cdn3.iconfinder.com/data/icons/education-209/64/bus-vehicle-transport-school-128.png"
+}
+> db.mensajes.find().pretty() 
+{
+        "_id" : ObjectId("632a29cdaee9c5b729f94e62"),
+        "email" : "daniel@gmail.com",
+        "timestamp" : "20/09/2022 17:00",
+        "mensaje" : "Buenas!"
+}
+{
+        "_id" : ObjectId("632a29cdaee9c5b729f94e63"),
+        "email" : "daniel@gmail.com",
+        "timestamp" : "20/09/2022 17:00",
+        "mensaje" : "Como estás?"
+}
+{
+        "_id" : ObjectId("632a29cdaee9c5b729f94e64"),
+        "email" : "vicky@gmail.com",
+        "timestamp" : "20/09/2022 17:03",
+        "mensaje" : "Hola Dani"
+}
+{
+        "_id" : ObjectId("632a29cdaee9c5b729f94e65"),
+        "email" : "vicky@gmail.com",
+        "timestamp" : "20/09/2022 17:04",
+        "mensaje" : "Bien bien y vos?"
+}
+{
+        "_id" : ObjectId("632a29cdaee9c5b729f94e66"),
+        "email" : "daniel@gmail.com",
+        "timestamp" : "20/09/2022 17:05",
+        "mensaje" : "Bien por suerte!"
+}
+{
+        "_id" : ObjectId("632a29cdaee9c5b729f94e67"),
+        "email" : "daniel@gmail.com",
+        "timestamp" : "20/09/2022 17:05",
+        "mensaje" : "Te escribo para consultarte por una calculadora"
+}
+{
+        "_id" : ObjectId("632a29cdaee9c5b729f94e68"),
+        "email" : "daniel@gmail.com",
+        "timestamp" : "20/09/2022 17:06",
+        "mensaje" : "Quisiera saber que modelos tenes y cuanto cuesta cada uno"
+}
+{
+        "_id" : ObjectId("632a29cdaee9c5b729f94e69"),
+        "email" : "vicky@gmail.com",
+        "timestamp" : "20/09/2022 17:10",
+        "mensaje" : "Me queda un solo modelo, de la marca Casio, cuesta $1200"
+}
+{
+        "_id" : ObjectId("632a29cdaee9c5b729f94e6a"),
+        "email" : "daniel@gmail.com",
+        "timestamp" : "20/09/2022 17:12",
+        "mensaje" : "Ah perfecto"
+}
+{
+        "_id" : ObjectId("632a29cdaee9c5b729f94e6b"),
+        "email" : "daniel@gmail.com",
+        "timestamp" : "20/09/2022 17:12",
+        "mensaje" : "Paso por él el miércoles!"
+}
+> db.productos.estimatedDocumentCount()
+10
+> db.mensajes.estimatedDocumentCount() 
+10
+> db.productos.insertOne({"name": "mochila xxl", "price": 6600, "thumbnail": "https://cdn3.iconfinder.com/data/icons/education-209/64/bag-pack-container-school-128.png"})
+{
+        "acknowledged" : true,
+        "insertedId" : ObjectId("632a2d5caee9c5b729f94e76")
+}
+> db.productos.find({"price": {$lt: 1000}}, {"name": 1})
+{ "_id" : ObjectId("632a2bb0aee9c5b729f94e6c"), "name" : "escuadra" }
+> db.productos.find({"price": {$and: [{$lt: 3000}, {$gt: 1000}]}}, {"name": 1})
+Error: error: {
+        "ok" : 0,
+        "errmsg" : "unknown operator: $and",
+        "code" : 2,
+        "codeName" : "BadValue"
+}
+> db.productos.find({$and: [{"price": {$lt: 3000}}, {"price": {$gt: 1000}}]}, {"name": 1})
+{ "_id" : ObjectId("632a2bb0aee9c5b729f94e6e"), "name" : "calculadora" }
+{ "_id" : ObjectId("632a2bb0aee9c5b729f94e6f"), "name" : "cuaderno" }
+{ "_id" : ObjectId("632a2bb0aee9c5b729f94e70"), "name" : "pizarrón" }
+> db.productos.find({"price": {$gt: 3000}}, {"name": 1})
+{ "_id" : ObjectId("632a2bb0aee9c5b729f94e71"), "name" : "globo terráqueo" }
+{ "_id" : ObjectId("632a2bb0aee9c5b729f94e72"), "name" : "reloj" }
+{ "_id" : ObjectId("632a2bb0aee9c5b729f94e73"), "name" : "mochila" }
+{ "_id" : ObjectId("632a2bb0aee9c5b729f94e74"), "name" : "microscopio" }
+{ "_id" : ObjectId("632a2bb0aee9c5b729f94e75"), "name" : "camión" }
+{ "_id" : ObjectId("632a2d5caee9c5b729f94e76"), "name" : "mochila xxl" }
+> db.productos.updateMany({}, update: {$set: {"stock": 100}, upsert: true})
+uncaught exception: SyntaxError: missing ) after argument list :
+@(shell):1:34
+> db.productos.updateMany({}, {$set: {"stock": 100}}, {upsert: true})               
+{ "acknowledged" : true, "matchedCount" : 11, "modifiedCount" : 11 }
+> db.productos.find({"price": {$gt: 4000}}).updateMany({}, {$set: {"stock": 100}}, {upsert: true})
+uncaught exception: TypeError: db.productos.find(...).updateMany is not a function :
+@(shell):1:1
+> db.productos.updateMany({"price": {$gt: 4000}}, {$set: {"stock": 100}}, {upsert: true})
+{ "acknowledged" : true, "matchedCount" : 3, "modifiedCount" : 0 }
+> db.productos.updateMany({"price": {$gt: 4000}}, {$set: {"stock": 0}}, {upsert: true})  
+{ "acknowledged" : true, "matchedCount" : 3, "modifiedCount" : 3 }
+> db.productos.find({}, {name: 1}).sort({"price": 1}).skip(2)                            
+{ "_id" : ObjectId("632a2bb0aee9c5b729f94e6e"), "name" : "calculadora" }    
+{ "_id" : ObjectId("632a2bb0aee9c5b729f94e6f"), "name" : "cuaderno" }       
+{ "_id" : ObjectId("632a2bb0aee9c5b729f94e70"), "name" : "pizarrón" }       
+{ "_id" : ObjectId("632a2bb0aee9c5b729f94e71"), "name" : "globo terráqueo" }
+{ "_id" : ObjectId("632a2bb0aee9c5b729f94e72"), "name" : "reloj" }
+{ "_id" : ObjectId("632a2bb0aee9c5b729f94e73"), "name" : "mochila" }
+{ "_id" : ObjectId("632a2bb0aee9c5b729f94e74"), "name" : "microscopio" }
+{ "_id" : ObjectId("632a2bb0aee9c5b729f94e75"), "name" : "camión" }
+{ "_id" : ObjectId("632a2d5caee9c5b729f94e76"), "name" : "mochila xxl" }
+> db.productos.find({}, {name: 1}).sort({"price": 1}).skip(2).limit(1)
+{ "_id" : ObjectId("632a2bb0aee9c5b729f94e6e"), "name" : "calculadora" }
+> db.productos.deleteMany({"price": {$lt: 1000}})
+{ "acknowledged" : true, "deletedCount" : 1 }
+> use admin
+switched to db admin
+> db.createUser({user: "pepe", pwd: "asd456", roles: [{role: "read", db: "ecommerce"}]})
+Successfully added user: {
+        "user" : "pepe",
+        "roles" : [
+                {
+                        "role" : "read",
+                        "db" : "ecommerce"
+                }
+        ]
+}
+$ mongo -u pepe -p asd456
+MongoDB shell version v4.4.16
+connecting to: mongodb://127.0.0.1:27017/?compressors=disabled&gssapiServiceName=mongodb
+Implicit session: session { "id" : UUID("3885376b-a079-4b38-aaa8-67ca073103a5") }
+MongoDB server version: 6.0.1
+WARNING: shell and server versions do not match
+> show dbs
+ecommerce  0.000GB
+> use ecommerce
+switched to db ecommerce
+> db.productos.insertOne({"name": "mochila xxl", "price": 7600, "thumbnail": "https://cdn3.iconfinder.com/data/icons/education-209/64/bag-pack-container-school-128.png"})
+uncaught exception: WriteCommandError({
+        "ok" : 0,
+        "errmsg" : "not authorized on ecommerce to execute command { insert: \"productos\", ordered: true, lsid: { id: UUID(\"3885376b-a079-4b38-aaa8-67ca073103a5\") }, $db: \"ecommerce\" }",
+        "code" : 13,
+        "codeName" : "Unauthorized"
+}) :
+WriteCommandError({
+        "ok" : 0,
+        "errmsg" : "not authorized on ecommerce to execute command { insert: \"productos\", ordered: true, lsid: { id: UUID(\"3885376b-a079-4b38-aaa8-67ca073103a5\") }, $db: \"ecommerce\" }",
+        "code" : 13,
+        "codeName" : "Unauthorized"
+})
+WriteCommandError@src/mongo/shell/bulk_api.js:417:48
+executeBatch@src/mongo/shell/bulk_api.js:915:23
+Bulk/this.execute@src/mongo/shell/bulk_api.js:1163:21
+DBCollection.prototype.insertOne@src/mongo/shell/crud_api.js:264:9
+@(shell):1:1
+> db.productos.find()
+{ "_id" : ObjectId("632a2bb0aee9c5b729f94e6d"), "name" : "matraz", "price" : 1000, "thumbnail" : "https://cdn3.iconfinder.com/data/icons/education-209/64/tube-lab-science-school-128.png", "stock" : 100 }
+{ "_id" : ObjectId("632a2bb0aee9c5b729f94e6e"), "name" : "calculadora", "price" : 1200, "thumbnail" : "https://cdn3.iconfinder.com/data/icons/education-209/64/calculator-math-tool-school-128.png", "stock" : 100 }
+{ "_id" : ObjectId("632a2bb0aee9c5b729f94e6f"), "name" : "cuaderno", "price" : 2300, "thumbnail" : "https://cdn3.iconfinder.com/data/icons/education-209/64/book-note-paper-school-128.png", "stock" : 100 }
+{ "_id" : ObjectId("632a2bb0aee9c5b729f94e70"), "name" : "pizarrón", "price" : 2800, "thumbnail" : "https://cdn3.iconfinder.com/data/icons/education-209/64/board-math-class-school-128.png", "stock" : 100 }
+{ "_id" : ObjectId("632a2bb0aee9c5b729f94e71"), "name" : "globo terráqueo", "price" : 3100, "thumbnail" : "https://cdn3.iconfinder.com/data/icons/education-209/64/globe-earth-geograhy-planet-school-128.png", "stock" : 100 }
+{ "_id" : ObjectId("632a2bb0aee9c5b729f94e72"), "name" : "reloj", "price" : 3500, "thumbnail" : "https://cdn3.iconfinder.com/data/icons/education-209/64/clock-stopwatch-timer-time-128.png", "stock" : 100 }
+{ "_id" : ObjectId("632a2bb0aee9c5b729f94e73"), "name" : "mochila", "price" : 4000, "thumbnail" : "https://cdn3.iconfinder.com/data/icons/education-209/64/bag-pack-container-school-128.png", "stock" : 100 }
+{ "_id" : ObjectId("632a2bb0aee9c5b729f94e74"), "name" : "microscopio", "price" : 4500, "thumbnail" : "https://cdn3.iconfinder.com/data/icons/education-209/64/microscope-lab-science-school-128.png", "stock" : 0 }
+{ "_id" : ObjectId("632a2bb0aee9c5b729f94e75"), "name" : "camión", "price" : 4800, "thumbnail" : "https://cdn3.iconfinder.com/data/icons/education-209/64/bus-vehicle-transport-school-128.png", "stock" : 0 }
+{ "_id" : ObjectId("632a2d5caee9c5b729f94e76"), "name" : "mochila xxl", "price" : 6600, "thumbnail" : "https://cdn3.iconfinder.com/data/icons/education-209/64/bag-pack-container-school-128.png", "stock" : 0 }
+>
