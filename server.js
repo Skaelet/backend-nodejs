@@ -1,18 +1,4 @@
 const express = require('express');
-const mysql = ({
-    client: 'mysql',
-    connection: {
-      host: '127.0.0.1',
-      user: 'root',
-      port : 3306,
-      password: '',
-      database: 'test'
-    },
-});
-const sqlite3 = ({
-  client: 'sqlite3',
-  connection: { filename: './db/ecommerce.sqlite' }
-});
 const Contenedor = require('./Contenedor');
 const listProducts = new Contenedor(mysql, 'products');
 const listMessajes = new Contenedor(sqlite3, 'messajes');
@@ -22,19 +8,6 @@ const httpServer = require("http").createServer(app);
 const io = require("socket.io")(httpServer);
 
 httpServer.listen(PORT, () => console.log("SERVER ON"));
-
-listProducts.createTable(table => {
-  table.increments('id');
-  table.string('title');
-  table.integer('price');
-  table.string('thumbnail');
-});
-listMessajes.createTable(table => {
-  table.increments('id');
-  table.string('date');
-  table.string('email');
-  table.string('messaje');
-});
 
 app.use('/public', express.static(__dirname + '/public'));
 app.use(express.urlencoded({ extended: true }));
