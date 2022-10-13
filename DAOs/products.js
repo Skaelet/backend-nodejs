@@ -1,10 +1,10 @@
-const mongoose = required("mongoose");
-const schema = required("./DAOs/mongodb/productsSchema");
+const mongoose = require("mongoose");
+const schema = require("./mongodb/productsSchema");
 
 class Products {
 
     async connect () {
-        await mongoose.connect('mongodb+srv://Skaelet:backCoder@desafio9.xmupe0a.mongodb.net/?retryWrites=true&w=majority');
+        await mongoose.connect('mongodb+srv://Skaelet:backCoder@desafio9.xmupe0a.mongodb.net/ecommerce?retryWrites=true&w=majority');
     }
 
     async disconnect () {
@@ -36,7 +36,7 @@ class Products {
     async getAll() {
         try{
             await this.connect();
-            return await schema.find({});
+            return await schema.exists({})? schema.find({}) : [];
         } catch(error) {
             console.log("No hay productos. Error: \n", error);
         } finally {

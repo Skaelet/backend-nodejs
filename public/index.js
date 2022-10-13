@@ -34,31 +34,75 @@ const sendProduct = () => {
     return false;
 }
 
-const sendMessaje = () => {
-    const messaje = {
+const sendMessage = () => {
+    const message = {
         date: getDate(),
-        email: document.getElementById('email').value,
-        messaje: document.getElementById('messaje').value,
+        author: {
+            id: document.getElementById('email').value,
+            nombre: document.getElementById('nombre').value,
+            apellido: document.getElementById('apellido').value,
+            edad: document.getElementById('edad').value,
+            alias: document.getElementById('alias').value,
+            avatar: document.getElementById('avatar').value,
+        },
+        text: document.getElementById('text').value,
     }
 
-    socket.emit('messaje', messaje);
+    socket.emit('message', message);
 
     return false;
 }
 
-socket.on('messaje', ({ date, email, messaje }) => {
-    const messajes = document.getElementById('messajes__list');
-    const messajeEmpty = document.getElementById('messaje--empty');
-    messajeEmpty && messajes.removeChild(messajeEmpty)
-    const messajesListMessaje = document.createElement('div');
-    messajesListMessaje.className = 'messajes__list--messaje';
-    messajesListMessaje.innerHTML = 
+const cargarMensajes = (denormalizeMessages) => {
+    denormalizeMessages.chats.length != 0
+    ?   listMensajes(denormalizeMessages)
+    :   listMensajesEmpty()
+}
+
+const listMensajes = (denormalizeMessages) => {
+    const listMessages = document.getElementById('messages__list');
+    denormalizeMessages.chats.forEach(m => {
+        const messagesListMessage = document.createElement('div');
+        messagesListMessage.className = 'messages__list--message';
+        messagesListMessage.innerHTML = 
         `
-            <span>${email}</span>
-            <span>${date}</span>
-            <span>${messaje}</span>
+            <span>${m.author.id}</span>
+            <span>${m.date}</span>
+            <span>${m.text}</span>
         `
-    messajes.appendChild(messajesListMessaje);
+        
+        listMessages.appendChild(messagesListMessage);
+    })
+}
+
+const listMensajesEmpty = () => {
+    const listMessages = document.getElementById('messages__list');
+    const messagesListMessage = document.createElement('div');
+        messagesListMessage.className = 'messages__list--message';
+        messagesListMessage.innerHTML = "<h5>No hay mensajes<h5>"
+        listMessages.appendChild(messagesListMessage);
+}
+
+socket.on('message', async(res) => {
+    const { result, entities } = await res;
+    console.log(await res);
+    const messageEmpty = document.getElementById('message--empty');
+    messageEmpty && listMessages.removeChild(messageEmpty)
+
+    const user = new normalizr.schema.Entity("users");
+    const messages = new normalizr.schema.Entity("mensajes", {
+      author: user,
+    });
+    const chats = new normalizr.schema.Entity("chats", { chats: [messages] });
+    const denormalizeMessages = new normalizr.denormalize(result, chats, entities);
+
+    cargarMensajes(denormalizeMessages);
+
+    console.log(denormalizeMessages.chats);
+
+    const titleChat = document.getElementById("chat");
+    titleChat.innerHTML = denormalizeMessages.chats.length != 0
+        &&   `<h3>Chat - Compresión(${Math.floor(JSON.stringify(res).length/JSON.stringify(denormalizeMessages).length*100)}%)</h3>`
 })
 //[DD/MM/YYYY hh:mm:ss]
 const getDate = () => {

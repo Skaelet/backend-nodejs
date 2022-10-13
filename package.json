@@ -1,10 +1,10 @@
 {
-  "name": "clase3",
+  "name": "desafio9",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node server.js",
+    "start": "nodemon server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -16,5 +16,8 @@
     "mongoose": "^6.6.4",
     "normalizr": "^3.6.2",
     "socket.io": "^4.5.1"
+  },
+  "devDependencies": {
+    "@faker-js/faker": "^7.5.0"
   }
 }
