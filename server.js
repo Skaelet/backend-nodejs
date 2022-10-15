@@ -28,25 +28,43 @@ const normalizeData = (msg) => {
 }
 
 app.get('/', async(req, res) => {
-  const productsList = await listProducts.getAll();
-  const messagesList = await listMessages.getAll();
 
-  io.on('connection', (socket) => {
-    socket.emit('mensaje', 'servidor conectado');
-  
-    socket.on('product', async(product) => {
-      const id = await listProducts.save(product);
-      const newProduct = {
-        id: id,
-        ...product
-      };
-      io.sockets.emit('product', newProduct);
-    })
-  
-    socket.on('message', async(message) => {
-      await listMessages.save(message);
-      const allMessages = await listMessages.getAll();
-      const messages = allMessages.map(m => {
+  const { name } = req.body;
+
+  if(name) {
+    const productsList = await listProducts.getAll();
+    const messagesList = await listMessages.getAll();
+
+    io.on('connection', (socket) => {
+      socket.emit('mensaje', 'servidor conectado');
+    
+      socket.on('product', async(product) => {
+        const id = await listProducts.save(product);
+        const newProduct = {
+          id: id,
+          ...product
+        };
+        io.sockets.emit('product', newProduct);
+      })
+    
+      socket.on('message', async(message) => {
+        await listMessages.save(message);
+        const allMessages = await listMessages.getAll();
+        const messages = allMessages.map(m => {
+          return {
+            id: m._id,
+            date: m.date,
+            author: m.author,
+            text: m.text,
+          }
+        })
+        const msg = { id: "mensajes", chats: [...messages] }
+        const normalizeMessages = normalizeData(msg);
+        console.log(normalizeMessages);
+        io.sockets.emit('message', normalizeMessages);
+      })
+    
+      const messages = messagesList.map(m => {
         return {
           id: m._id,
           date: m.date,
@@ -54,32 +72,25 @@ app.get('/', async(req, res) => {
           text: m.text,
         }
       })
+
       const msg = { id: "mensajes", chats: [...messages] }
       const normalizeMessages = normalizeData(msg);
-      console.log(normalizeMessages);
+    
       io.sockets.emit('message', normalizeMessages);
-    })
-  
-    const messages = messagesList.map(m => {
-      return {
-        id: m._id,
-        date: m.date,
-        author: m.author,
-        text: m.text,
-      }
-    })
+    });
 
-    const msg = { id: "mensajes", chats: [...messages] }
-    const normalizeMessages = normalizeData(msg);
-  
-    io.sockets.emit('message', normalizeMessages);
-  });
-
-  res.render('pages/home', 
-  {
-    products:  productsList,
-  });
+    res.render('pages/home', 
+    {
+      products:  productsList,
+    });
+  } else {
+    res.redirect('/login');
+  }
 });
+
+app.post('/', async(req, res) => {
+
+})
 
 app.get('/api/productos-test', async(req, res) => {
   const id = faker.datatype.number(1000);
@@ -93,4 +104,8 @@ app.get('/api/productos-test', async(req, res) => {
     price,
     url,
   });
+})
+
+app.get('/login', async(req, res) => {
+  res.render('pages/session');
 })
