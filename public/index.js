@@ -1,4 +1,5 @@
 const socket = io();
+const listMessages = document.getElementById('messages__list');
 
 socket.on("connect", () => {
     console.log(socket.id);
@@ -60,7 +61,7 @@ const cargarMensajes = (denormalizeMessages) => {
 }
 
 const listMensajes = (denormalizeMessages) => {
-    const listMessages = document.getElementById('messages__list');
+    listMessages.innerHTML = "<h3>Chat</h3>";
     denormalizeMessages.chats.forEach(m => {
         const messagesListMessage = document.createElement('div');
         messagesListMessage.className = 'messages__list--message';
@@ -76,18 +77,15 @@ const listMensajes = (denormalizeMessages) => {
 }
 
 const listMensajesEmpty = () => {
-    const listMessages = document.getElementById('messages__list');
     const messagesListMessage = document.createElement('div');
-        messagesListMessage.className = 'messages__list--message';
-        messagesListMessage.innerHTML = "<h5>No hay mensajes<h5>"
-        listMessages.appendChild(messagesListMessage);
+    messagesListMessage.className = 'messages__list--message';
+    messagesListMessage.innerHTML = "<h5>No hay mensajes<h5>";
+    listMessages.appendChild(messagesListMessage);
 }
 
 socket.on('message', async(res) => {
     const { result, entities } = await res;
     console.log(await res);
-    const messageEmpty = document.getElementById('message--empty');
-    messageEmpty && listMessages.removeChild(messageEmpty)
 
     const user = new normalizr.schema.Entity("users");
     const messages = new normalizr.schema.Entity("mensajes", {
@@ -96,16 +94,27 @@ socket.on('message', async(res) => {
     const chats = new normalizr.schema.Entity("chats", { chats: [messages] });
     const denormalizeMessages = new normalizr.denormalize(result, chats, entities);
 
-    cargarMensajes(denormalizeMessages);
+    cargarMensajes(await denormalizeMessages);
 
     console.log(denormalizeMessages.chats);
 
-    const titleChat = document.getElementById("chat");
+    const titleChat = document.getElementsByTagName("h3");
     titleChat.innerHTML = denormalizeMessages.chats.length != 0
-        &&   `<h3>Chat - Compresión(${Math.floor(JSON.stringify(res).length/JSON.stringify(denormalizeMessages).length*100)}%)</h3>`
+        ?   `<h3>Chat - Compresión(${Math.floor(JSON.stringify(res).length/JSON.stringify(denormalizeMessages).length*100)}%)</h3>`
+        :   `<h3>Chat</h3>`
 })
+
+const buttonLogout = document.getElementById('logout');
+
+buttonLogout.addEventListener('click', logout);
+
+function logout() {
+    location.href = '/logout';
+}
+
 //[DD/MM/YYYY hh:mm:ss]
 const getDate = () => {
     const date = new Date();
     return date.toLocaleString('en-GB');
 }
+

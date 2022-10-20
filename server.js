@@ -9,12 +9,34 @@ const app = express();
 const PORT = 8080;
 const httpServer = require("http").createServer(app);
 const io = require("socket.io")(httpServer);
+const session = require('express-session');
+const MongoStore = require('connect-mongo');
+const advancedOptions = {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+};
+
+
 
 httpServer.listen(PORT, () => console.log("SERVER ON"));
 
 app.use('/public', express.static(__dirname + '/public'));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+
+app.use(session({
+  store: MongoStore.create({
+    mongoUrl: 'mongodb+srv://Skaelet:backCoder@desafio9.xmupe0a.mongodb.net/ecommerce?retryWrites=true&w=majority',
+    mongoOptions: advancedOptions,
+  }),
+  secret: 'Gauss',
+  resave: false,
+  saveUninitialized: false,
+  rolling: true,
+  cookie: {
+    maxAge: 1*60*1000, //minutos de persistencia
+  }
+}))
 
 app.set('view engine', 'ejs');
 
@@ -28,10 +50,7 @@ const normalizeData = (msg) => {
 }
 
 app.get('/', async(req, res) => {
-
-  const { name } = req.body;
-
-  if(name) {
+  if(req?.session?.username){
     const productsList = await listProducts.getAll();
     const messagesList = await listMessages.getAll();
 
@@ -60,7 +79,6 @@ app.get('/', async(req, res) => {
         })
         const msg = { id: "mensajes", chats: [...messages] }
         const normalizeMessages = normalizeData(msg);
-        console.log(normalizeMessages);
         io.sockets.emit('message', normalizeMessages);
       })
     
@@ -81,16 +99,13 @@ app.get('/', async(req, res) => {
 
     res.render('pages/home', 
     {
+      username: req.session.username,
       products:  productsList,
     });
   } else {
     res.redirect('/login');
   }
 });
-
-app.post('/', async(req, res) => {
-
-})
 
 app.get('/api/productos-test', async(req, res) => {
   const id = faker.datatype.number(1000);
@@ -107,5 +122,21 @@ app.get('/api/productos-test', async(req, res) => {
 })
 
 app.get('/login', async(req, res) => {
-  res.render('pages/session');
+  res.render('pages/login');
+});
+
+app.post('/login', async(req, res) => {
+  const { nombre } = req.body;
+  req.session.username = nombre;
+  res.redirect('/');
+});
+
+app.get('/logout', async(req, res) => {
+  const { username } = req.session;
+  req.session.destroy((err) => {
+    console.log(err);
+  });
+  res.render('pages/logout', {
+    username,
+  });
 })

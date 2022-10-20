@@ -5,8 +5,12 @@
   </head>
   <body>
     <main>
+      <div class="container--welcome">
+        <h3 class="title">¡Bienvenido/a <%=username%>!</h3>
+        <button class="logout" id="logout">Desloguear</button>
+      </div>
       <div class="toLoad">
-        <h1 class="title">Carga de productos</h1>
+        <h2 class="title">Carga de productos</h1>
         <form class="form" onsubmit="return sendProduct(this)">
           <label for="title">Nombre:</label>
           <input type="text" name="title" id="title">
@@ -18,7 +22,7 @@
         </form>
       </div>
       <div class="list" id="products">
-        <h1 class="title">Listado de productos</h1>
+        <h2 class="title">Listado de productos</h2>
         <% if(products) {%>
           <% products.forEach((item)=>{ %>
             <div class="products">
@@ -35,7 +39,7 @@
         <% } %>
       </div>
       <div class="messages">
-        <h1 class="title">Centro de mensajes</h1>
+        <h2 class="title">Centro de mensajes</h2>
         <form class="form" onsubmit="return sendMessage(this)">
           <label for="email">Email:</label>
           <input type="email" name="email" id="email">
@@ -54,10 +58,13 @@
           <input class="button" type="submit" value="Enviar">
         </form>
         <div class="messages__list" id="messages__list">
-          <h3 id="chat">Chat</h3>
+          <h3 id="chat"></h3>
         </div>
       </div>
     </main>
+    <script src="https://cdn.jsdelivr.net/npm/normalizr@3.6.2/dist/normalizr.browser.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="../public/index.js"></script>
     <%- include('../partials/footer'); %> 
   </body>
 </html>
