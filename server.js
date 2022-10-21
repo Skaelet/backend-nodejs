@@ -16,8 +16,6 @@ const advancedOptions = {
   useUnifiedTopology: true,
 };
 
-
-
 httpServer.listen(PORT, () => console.log("SERVER ON"));
 
 app.use('/public', express.static(__dirname + '/public'));

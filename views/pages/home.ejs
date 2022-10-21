@@ -26,10 +26,10 @@
         <% if(products) {%>
           <% products.forEach((item)=>{ %>
             <div class="products">
-                <div class="product-img"><img src="<%=item.thumbnail %>"/></div>
-                <span><%=item.id%></span> 
-                <span><%=item.title%></span>
-                <span><%=item.price%></span>
+              <div class="product-img"><img src="<%=item.thumbnail %>"/></div>
+              <span><%=item.id%></span> 
+              <span><%=item.title%></span>
+              <span><%=item.price%></span>
             </div>
           <% }) %>
         <% } else { %>
