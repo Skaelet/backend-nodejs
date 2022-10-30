@@ -3,7 +3,7 @@ const schema = require("./mongodb/productsSchema");
 
 class Products {
   async connect () {
-    await mongoose.connect('mongodb+srv://Skaelet:backCoder@desafio9.xmupe0a.mongodb.net/ecommerce?retryWrites=true&w=majority');
+    mongoose.connect('mongodb+srv://Skaelet:backCoder@desafio9.xmupe0a.mongodb.net/ecommerce?retryWrites=true&w=majority');
   }
 
   async disconnect () {

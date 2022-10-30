@@ -3,18 +3,23 @@ const { normalize, schema } = require('normalizr');
 const express = require('express');
 const Products = require('./DAOs/products');
 const Messages = require('./DAOs/messages');
+const User = require('./DAOs/mongodb/userSchema');
 const listProducts = new Products();
 const listMessages = new Messages();
 const app = express();
 const PORT = 8080;
 const httpServer = require("http").createServer(app);
 const io = require("socket.io")(httpServer);
+const mongoose = require("mongoose");
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
 const advancedOptions = {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 };
+const bCrypt = require('bcrypt');
 
 httpServer.listen(PORT, () => console.log("SERVER ON"));
 
@@ -28,7 +33,7 @@ app.use(session({
     mongoOptions: advancedOptions,
   }),
   secret: 'Gauss',
-  resave: false,
+  resave: true,
   saveUninitialized: false,
   rolling: true,
   cookie: {
@@ -36,16 +41,75 @@ app.use(session({
   }
 }))
 
+app.use(passport.initialize());
+app.use(passport.session());
+
 app.set('view engine', 'ejs');
 
-const normalizeData = (msg) => {
-  const user = new schema.Entity("users");
-  const messages = new schema.Entity("mensajes", {
-    author: user,
-  });
-  const chats = new schema.Entity("chats", { chats: [messages] });
-  return normalize(msg, chats);
-}
+passport.use('login', new LocalStrategy(
+  async(username, password, done) => {
+    mongoose.createConnection('mongodb+srv://Skaelet:backCoder@desafio9.xmupe0a.mongodb.net/ecommerce?retryWrites=true&w=majority');
+    User.findOne({ username }, function (err, user) {
+      if (err)
+        return done(err);
+ 
+      if (!user) {
+        console.log('User Not Found with username ' + username);
+        return done(null, false);
+      }
+ 
+      if (!isValidPassword(user, password)) {
+        console.log('Invalid Password');
+        return done(null, false);
+      }
+ 
+      return done(null, user);
+    });
+  })
+ );
+ 
+passport.use('signup', new LocalStrategy({
+  passReqToCallback: true
+ },
+  async(req, username, password, done) => {
+    mongoose.createConnection('mongodb+srv://Skaelet:backCoder@desafio9.xmupe0a.mongodb.net/ecommerce?retryWrites=true&w=majority');
+    User.findOne({ username }, function (err, user) {
+ 
+      if (err) {
+        console.log('Error in SignUp: ' + err);
+        return done(err);
+      }
+ 
+      if (user) {
+        console.log('User already exists');
+        return done(null, false)
+      }
+ 
+      const newUser = {
+        username: username,
+        password: createHash(password),
+      }
+      User.create(newUser, (err, userWithId) => {
+        if (err) {
+          console.log('Error in Saving user: ' + err);
+          return done(err);
+        }
+        console.log(user)
+        console.log('User Registration succesful');
+        return done(null, userWithId);
+      });
+    });
+  })
+ )  
+
+passport.serializeUser((user, done) => {
+  done(null, user._id);
+});
+
+passport.deserializeUser((id, done) => {
+  User.findById(id, done);
+});
+
 
 app.get('/', async(req, res) => {
   if(req?.session?.username){
@@ -80,7 +144,7 @@ app.get('/', async(req, res) => {
         io.sockets.emit('message', normalizeMessages);
       })
     
-      const messages = messagesList.map(m => {
+      const messages = messagesList?.map(m => {
         return {
           id: m._id,
           date: m.date,
@@ -101,7 +165,7 @@ app.get('/', async(req, res) => {
       products:  productsList,
     });
   } else {
-    res.redirect('/login');
+    res.redirect('/register');
   }
 });
 
@@ -123,9 +187,10 @@ app.get('/login', async(req, res) => {
   res.render('pages/login');
 });
 
-app.post('/login', async(req, res) => {
-  const { nombre } = req.body;
-  req.session.username = nombre;
+app.post('/login', passport.authenticate('login', { failureRedirect: '/faillogin' }), async(req, res) => {
+  const { username, password } = req.body;
+  req.session.username = username;
+  req.session.password = password;
   res.redirect('/');
 });
 
@@ -138,3 +203,43 @@ app.get('/logout', async(req, res) => {
     username,
   });
 })
+
+app.get('/register', async(req, res) => {
+  res.render('pages/register');
+});
+
+app.post('/register', passport.authenticate('signup', { failureRedirect: '/failregister' }), async(req, res) => {
+  const { username, password } = req.body;
+  req.session.username = username;
+  req.session.password = password;
+  res.redirect('/');
+});
+
+app.get('/faillogin', async(req, res) => {
+  res.json({message: 'Fallo en el login'})
+})
+
+app.get('/failsignup', async(req, res) => {
+  res.json({message: 'Fallo en el signup'})
+})
+
+const normalizeData = (msg) => {
+  const user = new schema.Entity("users");
+  const messages = new schema.Entity("mensajes", {
+    author: user,
+  });
+  const chats = new schema.Entity("chats", { chats: [messages] });
+  return normalize(msg, chats);
+}
+
+const createHash = (password) => {
+  return bCrypt.hashSync(
+    password,
+    bCrypt.genSaltSync(10),
+    null);
+}
+
+const isValidPassword = (user, password) => {
+  const hash = createHash(password);
+  return bCrypt.compare(user.password, hash)
+}
