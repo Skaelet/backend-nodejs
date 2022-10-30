@@ -1,67 +1,46 @@
 const mongoose = require("mongoose");
 const schema = require("./mongodb/messagesSchema");
+const conn = mongoose.createConnection('mongodb+srv://Skaelet:backCoder@desafio9.xmupe0a.mongodb.net/ecommerce?retryWrites=true&w=majority');
+const model = conn.model('Messages', schema);
 
 class Messages {
-  connect () {
-    mongoose.connect('mongodb+srv://Skaelet:backCoder@desafio9.xmupe0a.mongodb.net/ecommerce?retryWrites=true&w=majority');
-  }
-
-  async disconnect () {
-    await mongoose.disconnect();
-  }
-
   async save (Object) {
     try {
-      this.connect();
-      return await schema.create(Object);
+      return await model.create(Object);
     } catch (error) {
       console.error(error);
-    } finally {
-      await this.disconnect();
     }
   }
 
   async getById(id) {
     try{
-      this.connect();
-      return await schema.findById(id);
+      return await model.findById(id);
     } catch(error) {
       console.log("Producto no encontrado. Error: \n", error);
-    } finally {
-      await this.disconnect();
     }
   }
 
   async getAll() {
     try{
-      this.connect();
-      return await schema.find({});
+      return await model.find({});
     } catch(error) {
       console.log("No hay productos. Error: \n", error);
-    } finally {
-      await this.disconnect();
     }
   }
 
   async deleteById(id) {
     try{
-      this.connect();
-      return await schema.deleteOne({ id: id });
+      return await model.deleteOne({ id: id });
     } catch(error) {
       console.log("El archivo no existe o no posee un array vacío. Error: \n", error);
-    } finally {
-      await this.disconnect();
     }
   }
 
   async updateProduct(id, Object) {
     try {
-      this.connect();
-      return await schema.updateOne({ id: id }, Object);
+      return await model.updateOne({ id: id }, Object);
     } catch (error) {
         console.log("El archivo no existe o no posee un array vacío. Error: \n", error)
-    } finally {
-      await this.disconnect();
     }
   }
 }
