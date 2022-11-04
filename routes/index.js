@@ -19,6 +19,8 @@ const getRoutes = app => {
   app.get('/faillogin', routes.getFailLogin);
 
   app.get('/failsignup', routes.getFailSignup);
+
+  app.get('/info', routes.getInfo)
 }
 
 module.exports = { getRoutes };

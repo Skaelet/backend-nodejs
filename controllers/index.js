@@ -68,6 +68,19 @@ const getFailSignup = async(req, res) => {
   res.render('pages/failsignup');
 }
 
+const getInfo = (req, res) => {
+  const arg = process.argv.length > 2 ? process.argv.slice(2) : 'No se ingresaron argumentos'
+  res.render('pages/info', {
+    arg: `Argumentos: ${arg}`,
+    so: `Sistema Operativo: ${process.platform}`,
+    node: `Version Node: ${process.version}`,
+    memory: `Memoria: ${process.memoryUsage.rss()}`,
+    path: `Path de ejecución: ${process.execPath}`,
+    pid: `Process id: ${process.pid}`,
+    filename: `Directorio: ${process.cwd()}`
+  })
+}
+
 module.exports = { 
   getHome, 
   getProductsTest, 
@@ -77,5 +90,6 @@ module.exports = {
   getRegister, 
   postRegister, 
   getFailLogin, 
-  getFailSignup 
+  getFailSignup,
+  getInfo
 }

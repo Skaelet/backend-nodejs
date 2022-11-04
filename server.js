@@ -1,7 +1,9 @@
+const parseArgs = require('minimist');
+const args = parseArgs(process.argv.slice(2));
 const { startMiddlewares } = require('./middlewares/index');
 const express = require('express');
 const app = express();
-const PORT = 8080;
+const PORT = args.p || 8080;
 const httpServer = require("http").createServer(app);
 const { startSocketConnection } = require('./middlewares/sockets');
 const { getRoutes } = require('./routes');

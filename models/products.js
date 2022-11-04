@@ -1,6 +1,7 @@
+require('dotenv').config();
 const mongoose = require("mongoose");
 const schema = require("./mongodb/productsSchema");
-const conn = mongoose.createConnection('mongodb+srv://Skaelet:backCoder@desafio9.xmupe0a.mongodb.net/ecommerce?retryWrites=true&w=majority');
+const conn = mongoose.createConnection(`mongodb+srv://${process.env.USER}:${process.env.PASSWORD}@desafio9.xmupe0a.mongodb.net/ecommerce?retryWrites=true&w=majority`);
 const model = conn.model('Products', schema);
 
 class Products {
