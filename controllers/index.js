@@ -1,17 +1,14 @@
 const { faker } = require('@faker-js/faker');
 const Products = require('../models/products');
 const listProducts = new Products();
+const { fork } = require('child_process');
 
 const getHome = async(req, res) => {
-  if(req?.session?.username){
-    res.render('pages/home', 
-    {
-      username: req.session.username,
-      products:  await listProducts.getAll(),
-    });
-  } else {
-    res.redirect('/register');
-  }
+  res.render('pages/home', 
+  {
+    username: req.session.username,
+    products:  await listProducts.getAll(),
+  });
 }
 
 const getProductsTest = async(req, res) => {
@@ -81,6 +78,15 @@ const getInfo = (req, res) => {
   })
 }
 
+const getNumsRandoms = (req, res) => {
+  const cant = req.params.cant || 100000000;
+  const forked = fork('../lib/forks');
+  forked.send('randoms', cant);
+  forked.on('randoms', (result) => {
+    res.json(result);
+  });
+}
+
 module.exports = { 
   getHome, 
   getProductsTest, 
@@ -91,5 +97,6 @@ module.exports = {
   postRegister, 
   getFailLogin, 
   getFailSignup,
-  getInfo
+  getInfo,
+  getNumsRandoms
 }

@@ -2,9 +2,9 @@ const protect = require('../auth/protect');
 const routes = require('../controllers/index');
 
 const getRoutes = app => {
-  app.get('/', routes.getHome);
+  app.get('/', protect.checkAuth, routes.getHome);
 
-  app.get('/api/productos-test', routes.getProductsTest);
+  app.get('/api/productos-test', protect.checkAuth, routes.getProductsTest);
 
   app.get('/login', routes.getLogin);
 
@@ -20,7 +20,9 @@ const getRoutes = app => {
 
   app.get('/failsignup', routes.getFailSignup);
 
-  app.get('/info', routes.getInfo)
+  app.get('/info', protect.checkAuth, routes.getInfo);
+
+  app.get('api/randoms', protect.checkAuth, routes.getNumsRandoms)
 }
 
 module.exports = { getRoutes };
