@@ -22,7 +22,7 @@ const getRoutes = app => {
 
   app.get('/info', protect.checkAuth, routes.getInfo);
 
-  app.get('api/randoms', protect.checkAuth, routes.getNumsRandoms)
+  app.get('/api/randoms', protect.checkAuth, routes.getNumsRandoms)
 }
 
 module.exports = { getRoutes };

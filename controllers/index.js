@@ -79,10 +79,11 @@ const getInfo = (req, res) => {
 }
 
 const getNumsRandoms = (req, res) => {
-  const cant = req.params.cant || 100000000;
-  const forked = fork('../lib/forks');
-  forked.send('randoms', cant);
-  forked.on('randoms', (result) => {
+  const cant = req.query.cant || 100000000;
+  console.log(req.query);
+  const forked = fork('./lib/forks.js');
+  forked.send(cant);
+  forked.on('message', (result) => {
     res.json(result);
   });
 }
