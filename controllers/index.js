@@ -2,6 +2,7 @@ const { faker } = require('@faker-js/faker');
 const Products = require('../models/products');
 const listProducts = new Products();
 const { fork } = require('child_process');
+const os = require('os');
 
 const getHome = async(req, res) => {
   res.render('pages/home', 
@@ -74,7 +75,8 @@ const getInfo = (req, res) => {
     memory: `Memoria: ${process.memoryUsage.rss()}`,
     path: `Path de ejecución: ${process.execPath}`,
     pid: `Process id: ${process.pid}`,
-    filename: `Directorio: ${process.cwd()}`
+    filename: `Directorio: ${process.cwd()}`,
+    threads: `Número de hilos: ${os.cpus().length}`
   })
 }
 
