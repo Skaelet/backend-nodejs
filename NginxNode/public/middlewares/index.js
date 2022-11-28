@@ -34,6 +34,7 @@ const startMiddlewares = app => {
   app.use(passport.session());
 
   app.set('view engine', 'ejs');
+
 }
 
 module.exports = { startMiddlewares };
