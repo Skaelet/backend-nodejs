@@ -10,7 +10,7 @@ const advancedOptions = {
 };
 
 const startMiddlewares = app => {
-  app.use('/public', express.static('public'));
+  app.use(express.static('/public'));
   app.use(express.urlencoded({ extended: true }));
   app.use(express.json());
 
