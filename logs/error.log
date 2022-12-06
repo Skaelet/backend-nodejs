@@ -171,3 +171,29 @@
 2022/12/05 20:44:53 [error] 8748#15544: *233 connect() failed (10061: No se puede establecer una conexión ya que el equipo de destino denegó expresamente dicha conexión) while connecting to upstream, client: 127.0.0.1, server: mginx_node, request: "GET / HTTP/1.1", upstream: "http://127.0.0.1:8082/", host: "localhost", referrer: "http://localhost/login"
 2022/12/05 21:18:01 [error] 8748#15544: *252 connect() failed (10061: No se puede establecer una conexión ya que el equipo de destino denegó expresamente dicha conexión) while connecting to upstream, client: 127.0.0.1, server: mginx_node, request: "GET / HTTP/1.1", upstream: "http://127.0.0.1:8082/", host: "localhost", referrer: "http://localhost/login"
 2022/12/05 21:18:34 [error] 8748#15544: *252 connect() failed (10061: No se puede establecer una conexión ya que el equipo de destino denegó expresamente dicha conexión) while connecting to upstream, client: 127.0.0.1, server: mginx_node, request: "GET /socket.io/socket.io.js HTTP/1.1", upstream: "http://127.0.0.1:8082/socket.io/socket.io.js", host: "localhost", referrer: "http://localhost/"
+2022/12/05 21:25:54 [notice] 19496#1416: signal process started
+2022/12/05 21:27:07 [notice] 4700#16964: signal process started
+2022/12/05 21:28:19 [notice] 16440#6884: signal process started
+2022/12/05 21:28:51 [notice] 21420#13720: signal process started
+2022/12/05 21:29:43 [notice] 6376#11720: signal process started
+2022/12/05 21:30:05 [notice] 1416#10828: signal process started
+2022/12/05 21:30:13 [notice] 18504#6900: signal process started
+2022/12/05 21:30:30 [notice] 20164#20152: signal process started
+2022/12/05 21:32:03 [notice] 18972#19740: signal process started
+2022/12/05 21:34:17 [notice] 13504#11464: signal process started
+2022/12/05 21:36:27 [notice] 16032#10460: signal process started
+2022/12/05 21:37:48 [notice] 13212#13144: signal process started
+2022/12/05 21:38:25 [notice] 304#15720: signal process started
+2022/12/05 21:38:50 [notice] 2428#21040: signal process started
+2022/12/05 21:38:54 [notice] 21252#14248: signal process started
+2022/12/05 21:39:50 [notice] 21312#20448: signal process started
+2022/12/05 21:41:44 [notice] 21420#18656: signal process started
+2022/12/05 21:42:26 [notice] 3396#18520: signal process started
+2022/12/05 21:45:41 [notice] 20096#18652: signal process started
+2022/12/05 21:46:08 [notice] 7072#20688: signal process started
+2022/12/05 21:46:13 [error] 14564#17636: *56 connect() failed (10061: No se puede establecer una conexión ya que el equipo de destino denegó expresamente dicha conexión) while connecting to upstream, client: 127.0.0.1, server: mginx_node, request: "GET / HTTP/1.1", upstream: "http://127.0.0.1:8081/", host: "localhost"
+2022/12/05 21:46:16 [error] 14564#17636: *56 connect() failed (10061: No se puede establecer una conexión ya que el equipo de destino denegó expresamente dicha conexión) while connecting to upstream, client: 127.0.0.1, server: mginx_node, request: "GET / HTTP/1.1", upstream: "http://127.0.0.1:8081/", host: "localhost"
+2022/12/05 21:46:20 [error] 14564#17636: *56 connect() failed (10061: No se puede establecer una conexión ya que el equipo de destino denegó expresamente dicha conexión) while connecting to upstream, client: 127.0.0.1, server: mginx_node, request: "GET / HTTP/1.1", upstream: "http://127.0.0.1:8081/", host: "localhost"
+2022/12/05 21:48:01 [notice] 8452#12472: signal process started
+2022/12/05 21:51:14 [error] 14776#9024: *66 upstream timed out (10060: Se produjo un error durante el intento de conexión ya que la parte conectada no respondió adecuadamente tras un periodo de tiempo, o bien se produjo un error en la conexión establecida ya que el host conectado no ha podido responder) while reading response header from upstream, client: 127.0.0.1, server: mginx_node, request: "GET /api/randoms?cant=1000000000000 HTTP/1.1", upstream: "http://127.0.0.1:8081/api/randoms?cant=1000000000000", host: "localhost"
+2022/12/05 21:52:24 [error] 14776#9024: *66 upstream timed out (10060: Se produjo un error durante el intento de conexión ya que la parte conectada no respondió adecuadamente tras un periodo de tiempo, o bien se produjo un error en la conexión establecida ya que el host conectado no ha podido responder) while reading response header from upstream, client: 127.0.0.1, server: mginx_node, request: "GET /api/randoms?cant=1000000000 HTTP/1.1", upstream: "http://127.0.0.1:8081/api/randoms?cant=1000000000", host: "localhost"
